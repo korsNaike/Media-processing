@@ -1,7 +1,7 @@
 import cv2
 
 # Открываем исходное видео
-input_video = cv2.VideoCapture('video.mp4')
+input_video = cv2.VideoCapture('files/video.mp4')
 
 # Получаем информацию о видео
 fps = input_video.get(cv2.CAP_PROP_FPS)
@@ -11,7 +11,7 @@ total_frames = input_video.get(cv2.CAP_PROP_FRAME_COUNT)
 
 # Создаем объект для записи выходного видео
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-output_video = cv2.VideoWriter('gray_video.mp4', fourcc, fps, (width, height), isColor=False)
+output_video = cv2.VideoWriter('files/gray_video.mp4', fourcc, fps, (width, height), isColor=False)
 
 # Отображаем и записываем видео
 while True:

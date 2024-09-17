@@ -1,7 +1,7 @@
 import cv2
 
 # Открываем видео
-cap = cv2.VideoCapture('video2.mp4')
+cap = cv2.VideoCapture('files/video2.mp4')
 
 # Проверяем, удалось ли открыть видео
 if not cap.isOpened():
