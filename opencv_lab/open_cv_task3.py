@@ -40,8 +40,7 @@ while True:
     # Отображаем кадр
     cv2.imshow('Video', frame)
 
-    # Ждем нажатия клавиши 'q' для выхода
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == 27:
         break
 
 # Освобождаем ресурсы

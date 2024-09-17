@@ -1,5 +1,6 @@
 import cv2
 
+
 def get_dominant_color(pixel):
     """Определяет преобладающий цвет по значению пикселя."""
     b, g, r = pixel
@@ -10,6 +11,7 @@ def get_dominant_color(pixel):
     else:
         return (255, 0, 0)  # Синий
 
+
 def draw_cross(frame, center, color):
     """Рисует крест на кадре в заданном месте."""
     center_x, center_y = center
@@ -17,6 +19,7 @@ def draw_cross(frame, center, color):
     cv2.rectangle(frame, (center_x - 100, center_y - 10), (center_x + 100, center_y + 10), color, -1)
     # Вертикальная линия
     cv2.rectangle(frame, (center_x - 10, center_y - 100), (center_x + 10, center_y + 100), color, -1)
+
 
 def main():
     # Открытие камеры
@@ -45,6 +48,7 @@ def main():
 
     cap.release()
     cv2.destroyAllWindows()
+
 
 if __name__ == "__main__":
     main()
