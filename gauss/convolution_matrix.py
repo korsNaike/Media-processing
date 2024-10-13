@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def gauss(x, y, sigma, a, b) -> float:
+def gauss(x: int, y: int, sigma: float | int, a: float | int, b: float | int) -> float:
     """
     Функция Гаусса
     :param x: Первый индекс матрицы
@@ -15,7 +15,13 @@ def gauss(x, y, sigma, a, b) -> float:
     return np.exp(-((x - a) ** 2 + (y - b) ** 2) / double_sigma_squared) / (np.pi * double_sigma_squared)
 
 
-def conv_matrix(matrix_size, ms_deviation) -> np.ndarray:
+def conv_matrix(matrix_size: int, ms_deviation: float | int) -> np.ndarray:
+    """
+    Создание и заполнение матрицы свёртки
+    :param matrix_size: Размер матрицы
+    :param ms_deviation: Среднеквадратичное отклонение
+    :return: Матрица numpy
+    """
     matrix = np.zeros((matrix_size, matrix_size))  # Инициализируем матрицу нулями
     a = b = matrix_size // 2  # Считаем математическое ожидание двумерной случайной величины
 
@@ -27,7 +33,7 @@ def conv_matrix(matrix_size, ms_deviation) -> np.ndarray:
     return matrix
 
 
-def normalize_matrix(matrix):
+def normalize_matrix(matrix: np.ndarray) -> np.ndarray:
     """
     Нормируем матрицу, чтобы сумма элементов была равна 1
     :param matrix:
