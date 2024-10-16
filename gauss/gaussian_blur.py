@@ -45,11 +45,11 @@ def gaussian_blur(img: np.ndarray, ker_size: int, ms_deviation: int | float) -> 
     for y in range(half_ker_size, h - half_ker_size):  # Проход по матрице вертикально
         for x in range(half_ker_size, w - half_ker_size):  # Проход по матрице горизонтально
             # Операция свёртки
-            val = 0
+            blurred_val = 0
             for k in range(-(ker_size // 2), ker_size // 2 + 1):  # Проходим по матрице свёртки
                 for l in range(-(ker_size // 2), ker_size // 2 + 1):
-                    val += img[y + k, x + l] * ker_matrix[k + half_ker_size, l + half_ker_size]
-            blurred_img[y, x] = val
+                    blurred_val += img[y + k, x + l] * ker_matrix[k + half_ker_size, l + half_ker_size]
+            blurred_img[y, x] = blurred_val
 
     return blurred_img
 
