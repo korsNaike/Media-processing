@@ -38,6 +38,7 @@ def gaussian_blur(img: np.ndarray, ker_size: int, ms_deviation: int | float) -> 
     :return: Размытое фото
     """
     ker_matrix = normalize_matrix(conv_matrix(ker_size, ms_deviation))
+    # ker_matrix = conv_matrix(ker_size, ker_size)
 
     blurred_img = img.copy()
     h, w = img.shape[:2]

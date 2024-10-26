@@ -1,3 +1,4 @@
+import cv2
 import numpy as np
 
 
@@ -28,6 +29,7 @@ def conv_matrix(matrix_size: int, ms_deviation: float | int) -> np.ndarray:
     # Заполяем матрицу свёртки
     for y in range(matrix_size):
         for x in range(matrix_size):
+            print(y, x)
             matrix[y, x] = gauss(x, y, ms_deviation, a, b)
 
     return matrix
@@ -42,12 +44,25 @@ def normalize_matrix(matrix: np.ndarray) -> np.ndarray:
     return matrix / np.sum(matrix)
 
 
+def show_resized(window_name: str, matrix: np.ndarray, size: tuple[int, int]) -> None:
+    resized_image = cv2.resize(matrix, size)
+    cv2.imshow(window_name, resized_image)
+
+
 if __name__ == '__main__':
     ms_deviation = 3
     for matrix_size in (3, 5, 7):
         print(f'\nРазмер матрицы: {matrix_size}')
         print(f'Среднеквадратичное отклонение: {ms_deviation}')
         matrix = conv_matrix(matrix_size, ms_deviation)
+        print("Без нормализации:\n")
+        print(matrix)
+        show_resized('Matrix', matrix, (300, 300))
         matrix = normalize_matrix(matrix)
+        show_resized('Normalize', matrix, (300, 300))
+        print("Нормализована:\n")
         print(matrix)
         print(f'Сумма элементов матрицы: {np.sum(matrix)}')
+
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
