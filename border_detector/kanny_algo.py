@@ -268,6 +268,9 @@ class KannyAlgo:
 if __name__ == '__main__':
     alg = KannyAlgo()
     # alg.process_image("../images/car.jpg")
+    alg.kernel_size = 15
+    alg.sigma_y = 5
+    alg.sigma_x = 5
     alg.upper_threshold_divider = 3
     alg.lower_threshold_divider = 5
     alg.process_image("../images/grafity.jpg")
