@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
     Mat cannyOutput;
 
     setlocale(LC_ALL, "Russian");
-    Mat inputImage = imread("car.jpg", IMREAD_GRAYSCALE);
+    Mat inputImage = imread("1.jpg", IMREAD_GRAYSCALE);
 
     Mat gradientMagnitude(inputImage.size(), CV_32FC1);
     Mat gradientAngleImage(inputImage.size(), CV_32FC1);
@@ -90,8 +90,8 @@ int main(int argc, char** argv) {
     // Отображение исходного изображения и результатов обработки
 
     imshow("Original_Image", inputImage);
-    imshow("Gradient_Magnitude", gradientMagnitude / 255.0f);
-    imshow("Gradient_Angle", gradientAngleImage / CV_PI / 2.0f);
+    // imshow("Gradient_Magnitude", gradientMagnitude / 255.0f);
+    // imshow("Gradient_Angle", gradientAngleImage / CV_PI / 2.0f);
     imshow("Canny_Output", cannyOutput);
 
     waitKey(0); // Ожидание нажатия клавиши
