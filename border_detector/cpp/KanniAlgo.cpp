@@ -73,10 +73,21 @@ void applyNonMaximumSuppression(const Mat& gradientMagnitude, const Mat& gradien
 }
 
 int main(int argc, char** argv) {
+    if (argc < 2) {
+        cout << "Использование: " << argv[0] << " <путь_к_изображению>" << endl;
+        return -1;
+    }
+
+    string imagePath = argv[1];
     Mat cannyOutput;
 
     setlocale(LC_ALL, "Russian");
-    Mat inputImage = imread("1.jpg", IMREAD_GRAYSCALE);
+    Mat inputImage = imread(imagePath, IMREAD_GRAYSCALE);
+
+    if (inputImage.empty()) {
+        cout << "Ошибка: Не удалось загрузить изображение: " << imagePath << endl;
+        return -1;
+    }
 
     Mat gradientMagnitude(inputImage.size(), CV_32FC1);
     Mat gradientAngleImage(inputImage.size(), CV_32FC1);
