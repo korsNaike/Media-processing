@@ -62,9 +62,15 @@ def train_model(model: Model, x_train, y_train, batch_size, epochs, x_test, y_te
     model.evaluate(x_test, y_test, verbose=1)
     return model
 
+def evaluate_model(model: Model, x_test, y_test):
+    model.evaluate(x_test, y_test, verbose=1)
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 if __name__ == '__main__':
     model = create_model()
+    model.load_weights('5-mlp-50-512.weights.h5')
+    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     with Timer():
-        train_model(model, x_train, y_train, batch_size, num_epochs, x_test, y_test, name='mlp')
+        # train_model(model, x_train, y_train, batch_size, num_epochs, x_test, y_test, name='mlp')
+        evaluate_model(model, x_test, y_test)
