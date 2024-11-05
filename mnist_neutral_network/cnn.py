@@ -26,6 +26,33 @@ def create_cnn_model():
     model = keras.Sequential()
     model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(width, height, depth)))
     model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(width, height, depth)))
+    model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    model.add(keras.layers.Flatten())
+    model.add(keras.layers.Dense(128, activation='relu'))
+    model.add(keras.layers.Dropout(0.3))
+    model.add(keras.layers.Dense(num_classes, activation='softmax'))
+
+    return model
+
+def create_cnn_1conv_model():
+    model = keras.Sequential()
+    model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(width, height, depth)))
+    model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    model.add(keras.layers.Flatten())
+    model.add(keras.layers.Dense(128, activation='relu'))
+    model.add(keras.layers.Dropout(0.3))
+    model.add(keras.layers.Dense(num_classes, activation='softmax'))
+
+    return model
+
+def create_cnn_3conv_model():
+    model = keras.Sequential()
+    model.add(keras.layers.Conv2D(16, kernel_size=(3, 3), activation='relu', input_shape=(width, height, depth)))
+    model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
+    model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(width, height, depth)))
+    model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(width, height, depth)))
+    model.add(keras.layers.MaxPooling2D(pool_size=(2, 2)))
     model.add(keras.layers.Flatten())
     model.add(keras.layers.Dense(128, activation='relu'))
     model.add(keras.layers.Dropout(0.3))
@@ -36,8 +63,8 @@ def create_cnn_model():
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 if __name__ == '__main__':
-    model = create_cnn_model()
-    model.load_weights('6-cnn-25-512.weights.h5')
+    model = create_cnn_3conv_model()
+    model.load_weights('3conv-16-32-filters.weights.h5')
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     with Timer():
         evaluate_model(model, x_test, y_test)
