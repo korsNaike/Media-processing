@@ -1,4 +1,5 @@
 import csv
+import logging
 
 import cv2
 import numpy as np
@@ -7,18 +8,20 @@ import pytesseract
 from text_recognition.dataset_preparing.images_crop import get_image_filenames
 from text_recognition.models.BaseModel import BaseModel
 from text_recognition.models.ClassicPytesseract import ClassicPytesseract
+from text_recognition.models.TesseractWithAugmentation import TesseractWithAugmentation
+from text_recognition.models.TesseractWithPostProcessing import TesseractWithPostProcessing
 from text_recognition.playground import clear_from_chars
 from text_recognition.val_types.BaseValType import BaseValType
 from text_recognition.val_types.FullValType import FullValType
 from text_recognition.val_types.LevensteinValType import LevensteinValType
 
 
-def test_recognition(rec_type: BaseModel, val_type: BaseValType, path_to_ds: str, need_write_answers: bool = True):
-    test_csv_file = f"{str(rec_type.__class__.__name__)}-v2-test.csv"
+def test_recognition(rec_type: BaseModel, val_type: BaseValType, path_to_ds: str, csv_prefix: str, need_write_answers: bool = True):
+    test_csv_file = f"{str(rec_type.__class__.__name__)}-{csv_prefix}-test.csv"
 
     answers = []
     for img_filename in get_image_filenames(path_to_ds):
-        img = cv2.imread(f'./dataset/formatted/val/{img_filename}')
+        img = cv2.imread(f'{path_to_ds}/{img_filename}')
         text_from_model = rec_type.image_to_string(img)
         answers.append(
             {
@@ -52,17 +55,25 @@ def calc_accuracy_by_answers_file(answers_file: str , val_type: BaseValType):
         reader = csv.DictReader(f)
         for row in reader:
             accuracy_values.append(val_type.check_value(row['model'], row['correct']))
-
     print(f"Точность: {np.mean(accuracy_values)}")
 
-if __name__ == '__main__':
-    # test_recognition(
-    #     ClassicPytesseract(),
-    #     FullValType(),
-    #     path_to_ds='./dataset/formatted/val',
-    #     need_write_answers=True
-    # )
+logging.basicConfig(level=logging.INFO)
+
+def start_test():
+    test_recognition(
+        TesseractWithPostProcessing(),
+        FullValType(),
+        path_to_ds='./dataset/formatted-v2/val',
+        csv_prefix='v2',
+        need_write_answers=True
+    )
+
+def start_calc():
     calc_accuracy_by_answers_file(
-        './ClassicPytesseract-v2-test.csv',
+        './TesseractWithPostProcessing-v2-test.csv',
         LevensteinValType()
     )
+
+if __name__ == '__main__':
+    # start_test()
+    start_calc()
