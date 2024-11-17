@@ -10,7 +10,7 @@ class ClassicEasyOCR(BaseModel):
         self.model = model or easyocr.Reader(['en'])
 
     def image_to_string(self, image, **params):
-        results = self.model.readtext(image, **params)
+        results = self.model.readtext(image, allowlist='0123456789', **params)
 
         if len(results) < 1:
             return None

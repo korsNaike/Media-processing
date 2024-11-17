@@ -7,6 +7,7 @@ import pytesseract
 
 from text_recognition.dataset_preparing.images_crop import get_image_filenames
 from text_recognition.models.BaseModel import BaseModel
+from text_recognition.models.ClassicEasyOCR import ClassicEasyOCR
 from text_recognition.models.ClassicPytesseract import ClassicPytesseract
 from text_recognition.models.TesseractWithAugmentation import TesseractWithAugmentation
 from text_recognition.models.TesseractWithPostProcessing import TesseractWithPostProcessing
@@ -61,7 +62,7 @@ logging.basicConfig(level=logging.INFO)
 
 def start_test():
     test_recognition(
-        TesseractWithPostProcessing(),
+        ClassicEasyOCR(),
         FullValType(),
         path_to_ds='./dataset/formatted-v2/val',
         csv_prefix='v2',
@@ -70,7 +71,7 @@ def start_test():
 
 def start_calc():
     calc_accuracy_by_answers_file(
-        './TesseractWithPostProcessing-v2-test.csv',
+        './ClassicEasyOCR-v2-test.csv',
         LevensteinValType()
     )
 
