@@ -26,7 +26,7 @@ def format_dataset(prepared_images_folder: str):
     write_labels(val_folder, val_images)
 
     copy_images_in_another_folder(prepared_images_folder, train_folder, train_images)
-    copy_images_in_another_folder(prepared_images_folder, val_folder, train_images)
+    copy_images_in_another_folder(prepared_images_folder, val_folder, val_images)
 
 
 

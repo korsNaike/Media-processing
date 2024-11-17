@@ -13,6 +13,8 @@ keras = "^3.6.0"
 easyocr = "^1.7.2"
 opencv-python = "^4.10.0.84"
 pytesseract = "^0.3.13"
+fuzzywuzzy = "^0.18.0"
+python-levenshtein = "^0.26.1"
 
 
 [build-system]

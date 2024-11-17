@@ -33,6 +33,6 @@ def get_image_filenames(directory):
 
 
 if __name__ == "__main__":
-    images_names = get_image_filenames('../dataset/raw')
+    images_names = get_image_filenames('../dataset/captcha_success')
     for image_name in images_names:
-        crop_center('../dataset/raw/' + image_name, '../dataset/cropped/' + image_name)
+        crop_center('../dataset/captcha_success/' + image_name, '../dataset/cropped/' + image_name)
