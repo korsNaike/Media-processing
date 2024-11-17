@@ -17,8 +17,8 @@ def format_dataset(prepared_images_folder: str):
     train_images = prepared_images[:split_index]
     val_images = prepared_images[split_index:]
 
-    train_folder = root_dataset_folder + '/formatted/train'
-    val_folder = root_dataset_folder + '/formatted/val'
+    train_folder = root_dataset_folder + '/formatted-v2/train'
+    val_folder = root_dataset_folder + '/formatted-v2/val'
 
     clear_folders([train_folder, val_folder])
 
@@ -55,4 +55,4 @@ def clear_folders(folders: list[str]):
         os.makedirs(folder)
 
 if __name__ == '__main__':
-    format_dataset('../dataset/preprocessed')
+    format_dataset('../dataset/v2')

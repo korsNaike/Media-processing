@@ -13,11 +13,11 @@ from text_recognition.val_types.FullValType import FullValType
 from text_recognition.val_types.LevensteinValType import LevensteinValType
 
 
-def test_recognition(rec_type: BaseModel, val_type: BaseValType, need_write_answers: bool = True):
-    test_csv_file = f"{str(rec_type.__class__.__name__)}-test.csv"
+def test_recognition(rec_type: BaseModel, val_type: BaseValType, path_to_ds: str, need_write_answers: bool = True):
+    test_csv_file = f"{str(rec_type.__class__.__name__)}-v2-test.csv"
 
     answers = []
-    for img_filename in get_image_filenames('./dataset/formatted/val'):
+    for img_filename in get_image_filenames(path_to_ds):
         img = cv2.imread(f'./dataset/formatted/val/{img_filename}')
         text_from_model = rec_type.image_to_string(img)
         answers.append(
@@ -46,5 +46,23 @@ def calc_accuracy(answers: list[dict[str, str]] , val_type: BaseValType):
 
     print(f"Точность: {np.mean(accuracy_values)}")
 
+def calc_accuracy_by_answers_file(answers_file: str , val_type: BaseValType):
+    accuracy_values = []
+    with open(answers_file, 'r') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            accuracy_values.append(val_type.check_value(row['model'], row['correct']))
+
+    print(f"Точность: {np.mean(accuracy_values)}")
+
 if __name__ == '__main__':
-    test_recognition(ClassicPytesseract(), LevensteinValType(), need_write_answers=True)
+    # test_recognition(
+    #     ClassicPytesseract(),
+    #     FullValType(),
+    #     path_to_ds='./dataset/formatted/val',
+    #     need_write_answers=True
+    # )
+    calc_accuracy_by_answers_file(
+        './ClassicPytesseract-v2-test.csv',
+        LevensteinValType()
+    )
