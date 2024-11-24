@@ -18,6 +18,8 @@ python-levenshtein = "^0.26.1"
 pandas = "^2.2.3"
 nltk = "^3.9.1"
 natsort = "^8.4.0"
+ultralytics = "^8.3.36"
+huggingface-hub = "^0.26.2"
 
 
 [build-system]
