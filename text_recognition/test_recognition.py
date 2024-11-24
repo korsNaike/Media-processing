@@ -4,6 +4,7 @@ import logging
 import cv2
 import numpy as np
 import pytesseract
+import easyocr
 
 from text_recognition.dataset_preparing.images_crop import get_image_filenames
 from text_recognition.models.BaseModel import BaseModel
@@ -62,16 +63,21 @@ logging.basicConfig(level=logging.INFO)
 
 def start_test():
     test_recognition(
-        ClassicEasyOCR(),
+        ClassicEasyOCR(
+            easyocr.Reader(['en'],
+                        model_storage_directory='custom_EasyOCR/model',
+                        user_network_directory='custom_EasyOCR/user_network',
+                        recog_network='custom_example')
+        ),
         FullValType(),
         path_to_ds='./dataset/formatted-v2/val',
-        csv_prefix='v2',
+        csv_prefix='trained-v2',
         need_write_answers=True
     )
 
 def start_calc():
     calc_accuracy_by_answers_file(
-        './ClassicEasyOCR-v2-test.csv',
+        './ClassicEasyOCR-trained-v2-test.csv',
         LevensteinValType()
     )
 
