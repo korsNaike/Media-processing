@@ -27,7 +27,7 @@ imgW: 220
 rgb: False
 contrast_adjust: False
 sensitive: True
-PAD: True
+PAD: False
 contrast_adjust: 0.0
 data_filtering_off: False
 # Model Architecture

@@ -8,7 +8,7 @@ import torch.nn as nn
 import torch.nn.init as init
 import torch.optim as optim
 import torch.utils.data
-from torch.cuda.amp import autocast, GradScaler
+from torch.cuda.amp import autocast
 import numpy as np
 
 from utils import CTCLabelConverter, AttnLabelConverter, Averager
@@ -67,7 +67,10 @@ def train(opt, show_number = 2, amp=False):
           opt.SequenceModeling, opt.Prediction)
 
     if opt.saved_model != '':
-        pretrained_dict = torch.load(opt.saved_model, map_location=torch.device('cpu'))
+        if torch.cuda.is_available():
+            pretrained_dict = torch.load(opt.saved_model)
+        else:
+            pretrained_dict = torch.load(opt.saved_model, map_location=torch.device('cpu'))
         if opt.new_prediction:
             model.Prediction = nn.Linear(model.SequenceModeling_output, len(pretrained_dict['module.Prediction.weight']))  
         
@@ -169,7 +172,7 @@ def train(opt, show_number = 2, amp=False):
     best_norm_ED = -1
     i = start_iter
 
-    scaler = GradScaler()
+    scaler = torch.amp.GradScaler('cuda' if torch.cuda.is_available() else 'cpu')
     t1= time.time()
         
     while(True):

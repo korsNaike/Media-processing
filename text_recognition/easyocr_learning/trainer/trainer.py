@@ -31,5 +31,6 @@ def get_config(file_path):
     return opt
 
 if __name__ == "__main__":
+    os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
     opt = get_config("config_files/num_filtered_config.yaml")
     train(opt, amp=False)
